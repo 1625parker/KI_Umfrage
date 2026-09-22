@@ -1,1 +1,225 @@
-&lt;h1&gt;Hallo&lt;/h1&gt;
+<!DOCTYPE html>
+2
+<html lang="de">
+3
+<head>
+4
+<meta charset="utf-8">
+5
+<meta name="viewport" content="width=device-width, initial-scale=1">
+6
+<title>Offline Umfrage V5</title>
+7
+ 
+8
+styles.css
+9
+ 
+10
+</head>
+11
+ 
+12
+<body>
+13
+ 
+14
+<h1>Wo verorte ich mich selbst, wo die Gesellschaft?</h1>
+15
+ 
+16
+<div class="controls">
+17
+ 
+18
+<label>
+19
+Linker Pol
+20
+<input id="leftLabel" value="KI ist Risiko">
+21
+</label>
+22
+ 
+23
+<label>
+24
+Rechter Pol
+25
+<input id="rightLabel" value="KI ist Chance">
+26
+</label>
+27
+ 
+28
+</div>
+29
+ 
+30
+<div class="inputBox">
+31
+ 
+32
+<h2>Antwort erfassen</h2>
+33
+ 
+34
+<div class="sliderRow">
+35
+ 
+36
+<span>Ich</span>
+37
+ 
+38
+<input
+39
+id="selfSlider"
+40
+type="range"
+41
+min="1"
+42
+max="100"
+43
+value="50">
+44
+ 
+45
+<span id="selfValue">50</span>
+46
+ 
+47
+</div>
+48
+ 
+49
+<div class="sliderRow">
+50
+ 
+51
+<span>Gesellschaft</span>
+52
+ 
+53
+<input
+54
+id="societySlider"
+55
+type="range"
+56
+min="1"
+57
+max="100"
+58
+value="50">
+59
+ 
+60
+<span id="societyValue">50</span>
+61
+ 
+62
+</div>
+63
+ 
+64
+<div class="buttonRow">
+65
+ 
+66
+<button id="addButton">
+67
+Antwort hinzufügen
+68
+</button>
+69
+ 
+70
+<button id="clearButton">
+71
+Alle Antworten löschen
+72
+</button>
+73
+ 
+74
+<button id="csvButton">
+75
+CSV exportieren
+76
+</button>
+77
+ 
+78
+</div>
+79
+ 
+80
+</div>
+81
+ 
+82
+<div id="answerCount">
+83
+0 Antworten
+84
+</div>
+85
+ 
+86
+<canvas
+87
+id="chart"
+88
+width="1400"
+89
+height="700">
+90
+</canvas>
+91
+ 
+92
+<h2>Antworten</h2>
+93
+ 
+94
+<table>
+95
+ 
+96
+<thead>
+97
+<tr>
+98
+<th>ID</th>
+99
+<th>Ich</th>
+100
+<th>Gesellschaft</th>
+101
+<th>Aktion</th>
+102
+</tr>
+103
+</thead>
+104
+ 
+105
+<tbody id="answerTable">
+106
+</tbody>
+107
+ 
+108
+</table>
+109
+ 
+110
+<script src="
+111
+ 
+112
+</body>
+113
+</html>
