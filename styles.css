@@ -1,1 +1,13 @@
+body {
+  font-family: Calibri, Arial, sans-serif;
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+}
+.controls { display:flex; gap:20px; margin-bottom:20px; }
+.inputBox { border:1px solid #ccc; padding:15px; margin-bottom:15px; }
+.sliderRow { margin-bottom:10px; }
+canvas { width:100%; border:1px solid #ccc; }
+table { border-collapse: collapse; width:100%; }
+th,td { border:1px solid #ddd; padding:6px; }
 
