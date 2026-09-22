@@ -16,4 +16,3 @@ window.onload=function(){
   document.getElementById("answerCount").innerHTML='0 Antworten';
  };
 };
-
