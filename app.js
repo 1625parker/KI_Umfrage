@@ -10,6 +10,8 @@ function drawChart() {
     var canvas = document.getElementById("chart");
     var ctx = canvas.getContext("2d");
 
+    canvas.height = Math.max(700, 160 + answers.length * 28);
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var left = 120;
@@ -17,18 +19,63 @@ function drawChart() {
     var width = right - left;
 
     ctx.font = "20px Arial";
+    ctx.fillStyle = "black";
+
     ctx.fillText(document.getElementById("leftLabel").value, left, 30);
-    ctx.fillText(document.getElementById("rightLabel").value, right - 120, 30);
+    ctx.fillText(document.getElementById("rightLabel").value, right - 150, 30);
 
     ctx.beginPath();
     ctx.moveTo(left, 60);
     ctx.lineTo(right, 60);
     ctx.stroke();
 
-    for (var i = 0; i < answers.length; i++) {
-        var y = 100 + i * 25;
-        var x1 = left + (answers[i].self / 100) * width;
-        var x2 = left + (answers[i].society / 100) * width;
+    if (answers.length > 0) {
+        var sumSelf = 0;
+        var sumSociety = 0;
+
+        for (var i = 0; i < answers.length; i++) {
+            sumSelf += answers[i].self;
+            sumSociety += answers[i].society;
+        }
+
+        var meanSelf = sumSelf / answers.length;
+        var meanSociety = sumSociety / answers.length;
+
+        var meanSelfX = left + (meanSelf / 100) * width;
+        var meanSocietyX = left + (meanSociety / 100) * width;
+
+        ctx.setLineDash([8,4]);
+
+        ctx.strokeStyle = "#d95f02";
+        ctx.beginPath();
+        ctx.moveTo(meanSelfX, 70);
+        ctx.lineTo(meanSelfX, canvas.height - 20);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#e6c229";
+        ctx.beginPath();
+        ctx.moveTo(meanSocietyX, 70);
+        ctx.lineTo(meanSocietyX, canvas.height - 20);
+        ctx.stroke();
+
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = "#d95f02";
+        ctx.fillText("Durchschnitt Ich", meanSelfX - 50, 85);
+
+        ctx.fillStyle = "#b59b00";
+        ctx.fillText("Durchschnitt Gesellschaft", meanSocietyX - 80, 105);
+    }
+
+    var sorted = answers.slice();
+    sorted.sort(function(a,b){ return a.self - b.self; });
+
+    for (var j = 0; j < sorted.length; j++) {
+
+        var y = 130 + j * 28;
+
+        var x1 = left + (sorted[j].self / 100) * width;
+        var x2 = left + (sorted[j].society / 100) * width;
 
         ctx.strokeStyle = "#cfcfcf";
         ctx.beginPath();
@@ -90,4 +137,6 @@ window.onload = function () {
         document.getElementById("answerCount").innerHTML = "0 Antworten";
         redrawTable();
     };
+
+    redrawTable();
 };
