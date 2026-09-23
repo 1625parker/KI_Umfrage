@@ -1,4 +1,4 @@
-// V6.5 CSV + PNG + LocalStorage
+// V6.5 COMPLETE - CSV + PNG + LocalStorage + Delete + Table + Chart
 var count = 0;
 var answers = [];
 
@@ -33,19 +33,23 @@ function exportCSV(){
   rows.push(answers[i].id+";"+answers[i].self+";"+answers[i].society);
  }
  var blob=new Blob([rows.join("
-")],{type:"text/csv"});
+")],{type:"text/csv;charset=utf-8"});
  var url=URL.createObjectURL(blob);
- var a=document.createElement("a");
- a.href=url;
- a.download="umfrage.csv";
- a.click();
+ var link=document.createElement("a");
+ link.href=url;
+ link.download="umfrage.csv";
+ link.click();
  URL.revokeObjectURL(url);
 }
 
 function deleteAnswer(id){
  var filtered=[];
- for(var i=0;i<answers.length;i++) if(answers[i].id!==id) filtered.push(answers[i]);
- answers=filtered; saveData(); redrawTable();
+ for(var i=0;i<answers.length;i++){
+  if(answers[i].id!==id){filtered.push(answers[i]);}
+ }
+ answers=filtered;
+ saveData();
+ redrawTable();
 }
 
 function drawChart(){
@@ -57,14 +61,18 @@ function drawChart(){
   var y=100+i*25;
   var x1=left+(answers[i].self/100)*width;
   var x2=left+(answers[i].society/100)*width;
-  ctx.strokeStyle="#cccccc"; ctx.beginPath(); ctx.moveTo(x1,y); ctx.lineTo(x2,y); ctx.stroke();
-  ctx.fillStyle="#d95f02"; ctx.beginPath(); ctx.arc(x1,y,6,0,Math.PI*2); ctx.fill();
-  ctx.fillStyle="#e6c229"; ctx.beginPath(); ctx.arc(x2,y,6,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle="#cccccc";
+  ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();
+  ctx.fillStyle="#d95f02";
+  ctx.beginPath();ctx.arc(x1,y,6,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle="#e6c229";
+  ctx.beginPath();ctx.arc(x2,y,6,0,Math.PI*2);ctx.fill();
  }
 }
 
 function redrawTable(){
- var table=document.getElementById("answerTable"); table.innerHTML="";
+ var table=document.getElementById("answerTable");
+ table.innerHTML="";
  for(var i=0;i<answers.length;i++){
   var row=document.createElement("tr");
   row.innerHTML='<td>'+answers[i].id+'</td><td>'+answers[i].self+'</td><td>'+answers[i].society+'</td><td><button onclick="deleteAnswer('+answers[i].id+')">Löschen</button></td>';
@@ -80,8 +88,15 @@ window.onload=function(){
  updateValues();
  document.getElementById("selfSlider").oninput=updateValues;
  document.getElementById("societySlider").oninput=updateValues;
- document.getElementById("addButton").onclick=function(){count++;answers.push({id:count,self:Number(document.getElementById("selfSlider").value),society:Number(document.getElementById("societySlider").value)});saveData();redrawTable();};
- document.getElementById("clearButton").onclick=function(){answers=[];count=0;saveData();redrawTable();};
+ document.getElementById("addButton").onclick=function(){
+  count++;
+  answers.push({id:count,self:Number(document.getElementById("selfSlider").value),society:Number(document.getElementById("societySlider").value)});
+  saveData();
+  redrawTable();
+ };
+ document.getElementById("clearButton").onclick=function(){
+  answers=[]; count=0; saveData(); redrawTable();
+ };
  var png=document.getElementById("pngButton"); if(png){png.onclick=exportPNG;}
  var csv=document.getElementById("csvButton"); if(csv){csv.onclick=exportCSV;}
  redrawTable();
